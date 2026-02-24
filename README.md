@@ -1,81 +1,92 @@
-# Portfolio Backtesting Engine
+Portfolio Backtesting and Risk Analysis Engine
 
-A Python project for backtesting multi-asset portfolios with configurable rebalancing and transaction costs. It downloads daily adjusted-close data, runs three portfolio strategies, computes standard performance metrics, and produces CSV outputs, charts, and an optional PDF report.
+An interactive Python application for simulating and analyzing multi-asset investment portfolios with configurable weights, time horizons, and rebalancing strategies.
 
-## Setup
+The system allows users to construct custom portfolios, run historical backtests, and evaluate risk and performance using institutional-grade financial metrics.
 
-1. **Clone or download** the project and open a terminal in the project root (`Portfolio-Backtesting-Engine/`).
+This project demonstrates skills in:
 
-2. **Create a virtual environment** (recommended):
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate    # Windows
-   # source venv/bin/activate   # macOS/Linux
-   ```
+portfolio modeling
 
-3. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+quantitative risk analysis
 
-## How to Run
+financial data engineering
 
-- **Full pipeline** (download data → backtest → metrics → plots → CSV outputs):
-  ```bash
-  python scripts/run.py
-  ```
-  This writes:
-  - `outputs/portfolio_metrics.csv` — one row per portfolio (Total Return, CAGR, Volatility, Sharpe, Sortino, Max Drawdown, Calmar).
-  - `outputs/equity_curve.csv` — portfolio index values over time.
-  - `outputs/drawdowns.csv` — drawdown series per portfolio.
-  - `outputs/equity_curve.png`, `outputs/drawdown.png`, `outputs/rolling_vol.png`, `outputs/rolling_sharpe.png`.
+Python application development
 
-- **PDF report** (run after the pipeline):
-  ```bash
-  python scripts/generate_report.py
-  ```
-  This creates `report/Portfolio_Backtest_Report.pdf` with a summary table, equity/drawdown charts, and a short interpretation section.
+interactive analytics dashboards
 
-## Project Structure
+Key Features
+Custom portfolio construction
 
-```
-Portfolio-Backtesting-Engine/
-  scripts/
-    config.py          # Assets, rebalance frequency, transaction cost, risk-free rate
-    data.py            # Download (yfinance), clean, align prices; daily returns
-    metrics.py         # Total return, CAGR, vol, Sharpe, Sortino, max DD, Calmar
-    strategies.py      # Equal Weight, 60/40 Stock/Bond, SPY only
-    backtest.py        # Backtest engine with rebalancing and transaction costs
-    plots.py           # Equity curve, drawdown, rolling vol, rolling Sharpe
-    run.py             # Full pipeline entry point
-    generate_report.py # PDF report generation
-  outputs/             # CSV and PNG outputs (created by run.py)
-  report/              # PDF report (created by generate_report.py)
-  README.md
-  requirements.txt
-```
+Users can:
 
-## Assets and Data
+select any combination of assets
 
-- **Assets:** SPY, QQQ, MSFT, NVDA, TLT, GLD.
-- **Data:** Adjusted close daily for the last 10 years (or max available). Missing data is cleaned and dates aligned across assets.
+assign custom weights
 
-## Portfolios Simulated
+simulate equal-weight or user-defined allocations
 
-1. **Equal Weight** — Equal weight across all 6 assets.
-2. **60/40 Stock/Bond** — 60% stocks (SPY, QQQ, MSFT, NVDA equally within stock sleeve), 40% bonds (TLT).
-3. **SPY Only** — 100% SPY.
+Example:
 
-## Configuration
+SPY 40%
+QQQ 20%
+MSFT 20%
+TLT 20%
+Adjustable time horizon
 
-Edit `scripts/config.py` to change:
+Users can dynamically change:
 
-- `REBALANCE_FREQUENCY`: `"monthly"` (end-of-month rebalance) or `"none"`.
-- `TRANSACTION_COST_BPS`: e.g. `5` for 5 bps per unit turnover.
-- `RISK_FREE_RATE`: annualized decimal (default `0`).
-- `ASSETS`, `YEARS_BACK`, rolling windows for charts, etc.
+start date
 
-## Requirements
+end date
 
-- Python 3.10+ (for `list[str]` / `str | None` style hints; works with 3.9 if you change type hints).
-- Libraries: pandas, numpy, matplotlib, yfinance, reportlab (optional for PDF).
+number of years back
+
+This allows testing performance across:
+
+bull markets
+
+bear markets
+
+crisis periods
+
+Configurable rebalancing
+
+Supported modes:
+
+monthly
+
+yearly
+
+no rebalancing
+
+This allows analysis of how rebalancing affects:
+
+returns
+
+volatility
+
+drawdowns
+
+Institutional risk metrics
+
+The system calculates:
+
+Total return
+
+CAGR
+
+Volatility
+
+Sharpe ratio
+
+Sortino ratio
+
+Maximum drawdown
+
+Value-at-Risk (VaR)
+
+Expected Shortfall
+
+These metrics are standard in hedge funds and asset management.
